@@ -8,7 +8,10 @@ const { validateJWT } = require('../middlewares/validate-jwt');
 const router = Router();
 
 /* ---------Get all notes--------- */
-router.get('/', getNotes);
+router.get('/', [
+    validateJWT,
+    fieldValidator
+],getNotes);
 
 /* ---------get note by id--------- */
 router.get('/:id', [
