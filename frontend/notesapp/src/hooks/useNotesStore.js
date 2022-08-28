@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { archiveNote, disableNote, onAddNewNote, onDeleteNote, onLoadNotes, onSetActiveNote, onUpdateNote, unArchiveNote } from "../store";
+import { archiveNote, disableNote, onAddNewNote, onDeleteNote, onLoadNotes, onSetActiveNote, onSetTags, onUpdateNote, unArchiveNote } from "../store";
 import moment from 'moment'
 import calendarApi from "../api/calendarApi";
 import { formatDate } from "../helpers/formatDate";
@@ -10,7 +10,7 @@ export const useNotesStore = () => {
 
     const dispatch = useDispatch();
 
-    const { notes, activeNote } = useSelector( state => state.notes ) //get the notes
+    const { notes, activeNote, tags } = useSelector( state => state.notes ) //get the notes
 
 
     //Set active note on store
@@ -19,7 +19,7 @@ export const useNotesStore = () => {
     };
 
     //create note or update
-    const startSavingEvent = async( note ) => {
+    const startSavingNote = async( note ) => {
 
                 //is update?
                 try {
@@ -94,19 +94,25 @@ export const useNotesStore = () => {
 
     };
 
+    //set Tags
+    const setTags = ( note ) => {
+        dispatch( onSetTags( note.tags ))
+    };
 
     return  {
         //properties
         notes,
         activeNote,
+        tags,
 
         //methods
         setActiveNote,
-        startSavingEvent,
+        startSavingNote,
         startDeleteNote,
         setDisableNote,
         setArchived,
         setUnArchived,
-        startLoadingNotes
+        startLoadingNotes,
+        setTags
     }
 }

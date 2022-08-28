@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Modal from "react-modal";
 import { useNotesStore, useUiStore } from "../../hooks";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 //custom style to modal
 const customStyles = {
@@ -18,11 +19,18 @@ Modal.setAppElement('#root');
 
 export const FormModal = () => {
 
+    // set tags
+    const [tags, settags] = useState([]);
+
+    //manage div tags
+    const [divTags, setDivTags] = useState([])
+
     //get active modal from store
     const {isModalOpen, closeModal, openModal } = useUiStore();
 
     //to know active note
-    const { activeNote, startSavingEvent, setDisableNote } = useNotesStore();
+    const { activeNote, startSavingNote, setDisableNote, tags: storeTags} = useNotesStore();
+
 
 
     //form state
@@ -43,11 +51,38 @@ export const FormModal = () => {
             [target.name]: target.value
         })
     };
+
+    //set tags
+    const onInputChangeTags = ({ target }) => {
+        settags(target.value)
+    };
+
+    //handle click
+    const handleClick = () => {
+        if( tags.length <= 0) { return }
+        else {
+            setDivTags([
+                ...divTags,
+                tags
+            ])
+
+            setFormValues({
+                ...formValues,
+                tags: divTags
+            })
+
+            //console.log(formValues);
+            console.log(divTags);
+            settags('')
+        }
+    }
     
     //close modal
     const onCloseModal = () => {
         closeModal();
         setFormValues({}) //clear form values
+        settags([])
+        setDivTags('')
     };  
 
     //close modal
@@ -55,12 +90,14 @@ export const FormModal = () => {
         e.preventDefault()
         closeModal()
         setFormValues({}) //clear form values
+        settags([])
+        setDivTags('')
     };
 
     //manage form submit
     const onSubmitForm = async(e) => {
         e.preventDefault();
-        await startSavingEvent(formValues);
+        await startSavingNote(formValues);
         closeModal();
         setFormValues({})
     };
@@ -101,6 +138,32 @@ export const FormModal = () => {
                     onChange={onInputChange}
                     value={ formValues.content }
                 ></textarea>
+            </div>
+
+            <div className="form-2">
+                    <div className="form-group row mb-2 mb-sm-5">
+                        <label className="form-label col-sm-2">Categories</label>
+                        <div className="tags-container">
+                            {
+                                (storeTags.length > 0) ? storeTags.map( tag => { console.log(tag)} ) : ''
+                            }
+                        </div>
+
+                        <label className="form-label col-sm-2"></label>
+                            <div className="d-flex justify-content-end gap-2">
+                                <input 
+                                        type="text"
+                                        className="col-sm-7"
+                                        placeholder="write category name"
+                                        name="tags"
+                                        value = { tags }
+                                        autoComplete="off"
+                                        onChange={onInputChangeTags}
+                                    />
+
+                                <p onClick={ handleClick } className="btn btn-success col-sm-3 mb-0">Add</p>
+                            </div>
+                    </div>  
             </div>
 
             <div className=" d-flex gap-2 flex-row-reverse">

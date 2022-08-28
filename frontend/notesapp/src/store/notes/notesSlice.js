@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   notes: [],
   activeNote: null,
+  tags:[],
 }
 
 export const notesSlice = createSlice({
@@ -67,7 +68,10 @@ export const notesSlice = createSlice({
     onLogoutNotes: ( state ) => {
       state.notes = [],
       state.activeNote = null
-    } 
+    },
+    onSetTags: (state, { payload }) => {
+        state.tags = payload
+    }
   },
 })
 
@@ -81,5 +85,6 @@ export const {
               archiveNote, 
               unArchiveNote, 
               onLoadNotes,
-              onLogoutNotes
+              onLogoutNotes,
+              onSetTags
             } = notesSlice.actions

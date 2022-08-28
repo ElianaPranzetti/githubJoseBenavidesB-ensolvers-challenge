@@ -70,7 +70,9 @@ export const useAuthStore = () => {
         localStorage.clear();
         distpach( onLogoutNotes() );
         distpach( onLogout() );
-    }
+    };
+
+
 
     return {
 
@@ -79,10 +81,11 @@ export const useAuthStore = () => {
         user,
         errorMessage,
 
+
         //methods
         startLogin,
         startRegister,
         checkAuthToken,
-        startLogout
+        startLogout,
     }
 }

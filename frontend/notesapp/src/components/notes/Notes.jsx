@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { useNotesStore, useUiStore } from '../../hooks';
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 
 import './notes.css'
@@ -10,7 +12,7 @@ export const Notes = ({note}) => {
     const { _id, title, lastEdited, active } = note;
 
     //use the store
-    const { setActiveNote, startDeleteNote, setArchived, setUnArchived } = useNotesStore();
+    const { setActiveNote, startDeleteNote, setArchived, setUnArchived, setTags} = useNotesStore();
 
     //use uiStore
     const { openModal } = useUiStore();
@@ -18,6 +20,7 @@ export const Notes = ({note}) => {
     //Active note
     const onClickEdit = () => {
       setActiveNote(note)
+      setTags(note)
       openModal();
 
     };
