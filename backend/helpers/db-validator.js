@@ -4,7 +4,7 @@ const User = require('../models/user')
 //verify email exist?
 const emailExist = async(email = '')=> {
         const existeEmail = await User.findOne( { email });
-        console.log(existeEmail);
+        //console.log(existeEmail);
         if ( existeEmail ) {
             throw new Error(`The email: ${ email } is already register on DB`)
         }

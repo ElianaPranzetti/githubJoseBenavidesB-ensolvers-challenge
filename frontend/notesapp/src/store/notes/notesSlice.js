@@ -63,9 +63,23 @@ export const notesSlice = createSlice({
           state.notes.push( note )
         }
       })
-    }
+    },
+    onLogoutNotes: ( state ) => {
+      state.notes = [],
+      state.activeNote = null
+    } 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onSetActiveNote, onAddNewNote, onUpdateNote, onDeleteNote, disableNote, archiveNote, unArchiveNote, onLoadNotes } = notesSlice.actions
+export const { 
+              onSetActiveNote, 
+              onAddNewNote, 
+              onUpdateNote, 
+              onDeleteNote, 
+              disableNote, 
+              archiveNote, 
+              unArchiveNote, 
+              onLoadNotes,
+              onLogoutNotes
+            } = notesSlice.actions

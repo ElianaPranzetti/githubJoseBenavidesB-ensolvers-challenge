@@ -50,11 +50,26 @@ const login = async (req, res = response) => {
             msg: 'Talk with the manager'
         });
     }
+};
 
-    
+// Renew JWT
+const renewJWT = async(req, res = response ) => {
+
+    const { uid, name } = req;
+
+    // generate new JWT
+    const token = await generateJWT( uid, name );
+
+
+    res.json({
+        uid,
+        name, 
+        token
+    })
 };
 
 
 module.exports = {
     login,
+    renewJWT
 }

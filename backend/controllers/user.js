@@ -1,5 +1,6 @@
 
 const bcryptjs = require('bcryptjs');
+const { generateJWT } = require('../helpers/generate-jwt');
 const User = require('../models/user');
 
 /* -----------get users -------------- */
@@ -46,9 +47,15 @@ const userPost = async (req, res) => {
     //save DB
     await user.save();
 
-    res.status(201).json({
-        user
-    })
+    //generate JWT
+    const token = await generateJWT( user._id );
+
+    res.status(201).json({ 
+        _id: user._id,
+        user,
+        token
+    });
+
 };
 
 /* -----------delete user -------------- */
