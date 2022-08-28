@@ -58,7 +58,9 @@ const getNoteById = async (req, res) => {
 /* -----------create note -------------- */
 const createNote = async (req, res) => {
 
-    const data = req.body;
+    let data = req.body;
+    //console.log(req);
+    data = { ...data, user: req.userAuth._id}
 
     try {
         //create note with the body data
@@ -131,7 +133,7 @@ const deleteNote = async (req, res) => {
             await Notes.findByIdAndDelete( id )
 
             //response
-            return res.status(201).json({
+            return res.status(200).json({
                 msg:'Note deleted'
             })
         } else {

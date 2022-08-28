@@ -16,7 +16,13 @@ const NoteSchema = Schema({
         type: Date,
         set: Date.now,
         default: Date.now
-    }
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+        require: true
+    },
+    tags: [String]
 });
 
 module.exports = model( 'Notes', NoteSchema );

@@ -11,7 +11,9 @@ class Server {
         this.port = process.env.PORT;
 
         this.paths = {
-            categories : '/api/v1/notes',
+            auth    : '/api/v1/auth',
+            notes   : '/api/v1/notes',
+            user    : '/api/v1/user',
         }
 
         // Connect to DATABASE
@@ -45,7 +47,9 @@ class Server {
     }
 
     routes () {
-        this.app.use( this.paths.categories, require( '../routes/notes'));
+        this.app.use( this.paths.notes, require( '../routes/notes'));
+        this.app.use( this.paths.user, require( '../routes/user'));
+        this.app.use( this.paths.auth, require('../routes/auth'));
 
     }
 

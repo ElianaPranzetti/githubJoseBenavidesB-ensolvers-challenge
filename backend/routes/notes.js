@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 
 const {getNotes, getNoteById, createNote, updateNote, deleteNote } = require('../controllers/notes');
 const { fieldValidator } = require('../middlewares/fielValidator');
+const { validateJWT } = require('../middlewares/validate-jwt');
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.get('/:id', [
 
 /* ---------create note--------- */
 router.post('/', [
+    validateJWT,
     check( 'title', 'The title is neccesary').not().isEmpty(), //check empty values
     fieldValidator
 ],createNote);
