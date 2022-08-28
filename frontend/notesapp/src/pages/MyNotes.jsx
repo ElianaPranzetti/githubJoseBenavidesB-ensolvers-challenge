@@ -1,7 +1,8 @@
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { FormModal } from "../components/modal/FormModal"
 import { NotesContainer } from "../components/notescontainer/NotesContainer"
-import { useUiStore } from "../hooks"
+import { useNotesStore, useUiStore } from "../hooks"
 
 
 
@@ -10,11 +11,18 @@ export const MyNotes = () => {
   //ui store
   const { openModal } = useUiStore();
 
+  //note store
+  const { startLoadingNotes } = useNotesStore();
+
   //set click to open modal
   const onClickOpenModal = (e) => {
       e.preventDefault();
       openModal();
   }
+
+  useEffect(() => {
+    startLoadingNotes()
+  }, []);
 
   return <>
     <div className="d-flex gap-5 ">

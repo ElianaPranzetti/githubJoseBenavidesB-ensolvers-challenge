@@ -1,53 +1,8 @@
 //Manage store
 import { createSlice } from '@reduxjs/toolkit';
 
-const notas = [
-    {
-        _id: 4124123241,
-        title: "Onota1",
-        lastEdited: 12123,
-        content: 'nadadadsds',
-        active: true
-    },
-    {
-        _id: 41212313441241,
-        title: "nota2",
-        lastEdited: 12123,
-        content: 'nadadadsds',
-        active: false
-    },
-    {
-        _id: 41244241241,
-        title: "nota3",
-        lastEdited: 12123,
-        content: 'nadadadsds',
-        active:true
-    },
-    {
-        _id: 412441341241241,
-        title: "nota4",
-        lastEdited: 12123,
-        content: 'nadadadsds',
-        active:false
-    },
-    {
-        _id: 4124421314312441241,
-        title: "nota5",
-        lastEdited: 12123,
-        content: 'nadadadsds',
-        active:true
-    },
-    {
-        _id: 412123412344134124241241,
-        title: "nota6",
-        lastEdited: 12123,
-        content: 'nadadadsds',
-        active:false
-    }
-]
-
 const initialState = {
-  notes: [...notas],
+  notes: [],
   activeNote: null,
 }
 
@@ -100,9 +55,17 @@ export const notesSlice = createSlice({
       })
       state.activeNote = null
     },
-
+    onLoadNotes: ( state, { payload }) => {
+      //state.notes = payload
+      payload.forEach( (note) => {
+        const exists = state.notes.some( dbNote => dbNote._id === note._id );
+        if ( !exists) {
+          state.notes.push( note )
+        }
+      })
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onSetActiveNote, onAddNewNote, onUpdateNote, onDeleteNote, disableNote, archiveNote, unArchiveNote } = notesSlice.actions
+export const { onSetActiveNote, onAddNewNote, onUpdateNote, onDeleteNote, disableNote, archiveNote, unArchiveNote, onLoadNotes } = notesSlice.actions

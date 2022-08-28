@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NotesContainer } from "../components/notescontainer/NotesContainer"
-
+import { useNotesStore } from "../hooks";
+import { FormModal } from "../components/modal/FormModal"
 
 
 export const ArchivedNotes = () => {
+  
+  const { startLoadingNotes } = useNotesStore();
+
+  useEffect(() => {
+    startLoadingNotes()
+  }, []);
 
   return (
     <>
@@ -17,6 +25,7 @@ export const ArchivedNotes = () => {
       </div> <hr/>
 
       <NotesContainer active={false}/>
+      <FormModal />
     </>
   )
 }

@@ -60,7 +60,6 @@ export const FormModal = () => {
     //manage form submit
     const onSubmitForm = async(e) => {
         e.preventDefault();
-        
         await startSavingEvent(formValues);
         closeModal();
         setFormValues({})
