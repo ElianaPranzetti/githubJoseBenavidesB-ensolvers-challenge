@@ -4,10 +4,10 @@ import { useNotesStore } from "../../hooks";
 import { filterNote } from "../../helpers/filterNotes";
 import { useEffect } from "react";
 
-export const NotesContainer = ({active}) => {
+export const NotesContainer = ({active, filter}) => {
 
     const { notes } = useNotesStore(); //Data from the store
-    const activeNotes = filterNote( notes, active); 
+    const activeNotes = filterNote( notes, active, filter); 
 
 
   return (

@@ -5,6 +5,8 @@ const initialState = {
   notes: [],
   activeNote: null,
   tags:[],
+  activeTags: [],
+  filter: ''
 }
 
 export const notesSlice = createSlice({
@@ -70,7 +72,20 @@ export const notesSlice = createSlice({
       state.activeNote = null
     },
     onSetTags: (state, { payload }) => {
-        state.tags = payload
+
+      state.tags = payload
+    },
+    onSetActiveTags: ( state, { payload }) => {
+      state.activeTags = payload
+    },
+    onDisableActiveTags: (state) => {
+      state.activeTags = []
+    },
+    onSetFilter: (state, {payload} ) => {
+      state.filter = payload
+    },
+    onDisableFilter: ( state ) => {
+      state.filter = ''
     }
   },
 })
@@ -86,5 +101,9 @@ export const {
               unArchiveNote, 
               onLoadNotes,
               onLogoutNotes,
-              onSetTags
+              onSetTags,
+              onSetActiveTags,
+              onDisableActiveTags,
+              onSetFilter,
+              onDisableFilter
             } = notesSlice.actions

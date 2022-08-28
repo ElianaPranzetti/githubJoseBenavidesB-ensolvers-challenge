@@ -12,7 +12,7 @@ export const Notes = ({note}) => {
     const { _id, title, lastEdited, active } = note;
 
     //use the store
-    const { setActiveNote, startDeleteNote, setArchived, setUnArchived, setTags} = useNotesStore();
+    const { setActiveNote, startDeleteNote, setArchived, setUnArchived, setActiveTags} = useNotesStore();
 
     //use uiStore
     const { openModal } = useUiStore();
@@ -20,7 +20,7 @@ export const Notes = ({note}) => {
     //Active note
     const onClickEdit = () => {
       setActiveNote(note)
-      setTags(note)
+      setActiveTags(note)
       openModal();
 
     };

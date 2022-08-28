@@ -1,16 +1,29 @@
-import { useDispatch, useSelector } from "react-redux"
-import { archiveNote, disableNote, onAddNewNote, onDeleteNote, onLoadNotes, onSetActiveNote, onSetTags, onUpdateNote, unArchiveNote } from "../store";
 import moment from 'moment'
-import calendarApi from "../api/calendarApi";
-import { formatDate } from "../helpers/formatDate";
+import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2";
+import calendarApi from "../api/calendarApi";
+import { filterNoteByTag } from '../helpers/filterNoteByTag';
+import { formatDate } from "../helpers/formatDate";
+import { getAllTags } from "../helpers/getAllTags";
+import { archiveNote, 
+        disableNote, 
+        onAddNewNote, 
+        onDeleteNote,  
+        onDisableFilter, 
+        onLoadNotes, 
+        onSetActiveNote, 
+        onSetActiveTags, 
+        onSetFilter, 
+        onSetTags, 
+        onUpdateNote, 
+        unArchiveNote } from "../store";
 
 
 export const useNotesStore = () => {
 
     const dispatch = useDispatch();
 
-    const { notes, activeNote, tags } = useSelector( state => state.notes ) //get the notes
+    const { notes, activeNote, tags, activeTags, filter } = useSelector( state => state.notes ) //get the notes
 
 
     //Set active note on store
@@ -28,7 +41,10 @@ export const useNotesStore = () => {
                         //update note in database
                         const {data} = await calendarApi.put(`/notes/${note._id}`, note)
                         //set the store
-                        dispatch( onUpdateNote({...note}));
+                        dispatch( onUpdateNote({...note})); 
+
+                        dispatch( onSetTags( getAllTags( notes ) )) // get the all unique tags
+                         
                     } else {
                         // get the notes from DB
                         const { data } = await calendarApi.post('/notes', note);
@@ -36,6 +52,8 @@ export const useNotesStore = () => {
 
                         //set the store with the notes
                         dispatch( onAddNewNote({ ...newNote , lastEdited: moment(note.lastEdited).format('DD/MM/YYYY')}))
+
+                        dispatch( onSetTags( getAllTags( notes ) )) // get the all unique tags
                     }
                 } catch (error) {
                     console.log(error);
@@ -49,6 +67,7 @@ export const useNotesStore = () => {
             const { data } = await calendarApi.get('/notes');
             const notes = formatDate( data.notes );
             dispatch( onLoadNotes( notes ) )
+            dispatch( onSetTags( getAllTags( notes ) )) // get the all unique tags
         } catch (error) {
             console.log(error);
             console.log('Error loading notes');
@@ -95,15 +114,35 @@ export const useNotesStore = () => {
     };
 
     //set Tags
-    const setTags = ( note ) => {
-        dispatch( onSetTags( note.tags ))
+    const setNoteTags = ( notes ) => {
+        dispatch( onSetTags( getAllTags( notes ) ))
+        filterNoteByTag('cocina', notes)
     };
+
+    //set Active Tags
+    const setActiveTags = ( note ) => {
+        dispatch( onSetActiveTags( note.tags ))
+    };
+
+    //set filter tag
+    const setFilterTag = (tag) => {
+        dispatch( onSetFilter(tag) )
+    };
+
+    //disable filter
+    const setEmptyFilter = () => {
+        dispatch( onDisableFilter() )
+    };
+
+
 
     return  {
         //properties
         notes,
         activeNote,
         tags,
+        activeTags,
+        filter,
 
         //methods
         setActiveNote,
@@ -113,6 +152,9 @@ export const useNotesStore = () => {
         setArchived,
         setUnArchived,
         startLoadingNotes,
-        setTags
+        setNoteTags,
+        setActiveTags,
+        setFilterTag,
+        setEmptyFilter
     }
 }

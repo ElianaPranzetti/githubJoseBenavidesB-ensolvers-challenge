@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Modal from "react-modal";
 import { useNotesStore, useUiStore } from "../../hooks";
-import { useAuthStore } from "../../hooks/useAuthStore";
+import { Tag } from "../tags/Tag";
 
 //custom style to modal
 const customStyles = {
@@ -29,7 +29,7 @@ export const FormModal = () => {
     const {isModalOpen, closeModal, openModal } = useUiStore();
 
     //to know active note
-    const { activeNote, startSavingNote, setDisableNote, tags: storeTags} = useNotesStore();
+    const { activeNote, startSavingNote, setDisableNote, activeTags, notes, setNoteTags,} = useNotesStore();
 
 
 
@@ -51,6 +51,12 @@ export const FormModal = () => {
             [target.name]: target.value
         })
     };
+
+    //effect notes change
+    useEffect(() => {
+        setNoteTags(notes)
+    }, [notes])
+    
 
     //set tags
     const onInputChangeTags = ({ target }) => {
@@ -80,18 +86,20 @@ export const FormModal = () => {
     //close modal
     const onCloseModal = () => {
         closeModal();
-        setFormValues({}) //clear form values
-        settags([])
-        setDivTags('')
+        setFormValues({}); //clear form values
+        settags([]);
+        setDivTags('');
+
     };  
 
     //close modal
     const onClickCloseModal = (e) => {
-        e.preventDefault()
-        closeModal()
-        setFormValues({}) //clear form values
-        settags([])
-        setDivTags('')
+        e.preventDefault();
+        closeModal();
+        setFormValues({}); //clear form values
+        settags([]);
+        setDivTags('');
+
     };
 
     //manage form submit
@@ -99,7 +107,7 @@ export const FormModal = () => {
         e.preventDefault();
         await startSavingNote(formValues);
         closeModal();
-        setFormValues({})
+        setFormValues({});
     };
 
   return (
@@ -145,7 +153,7 @@ export const FormModal = () => {
                         <label className="form-label col-sm-2">Categories</label>
                         <div className="tags-container">
                             {
-                                (storeTags.length > 0) ? storeTags.map( tag => { console.log(tag)} ) : ''
+                                (activeTags.length > 0) ? activeTags.map( (tag, idx) => { return <Tag tag={tag} idx={idx}/> } ) : ''
                             }
                         </div>
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
+import { DropdownList } from "../components/dropdown/DropdownList"
 import { FormModal } from "../components/modal/FormModal"
 import { NotesContainer } from "../components/notescontainer/NotesContainer"
 import { useNotesStore, useUiStore } from "../hooks"
@@ -16,7 +17,7 @@ export const MyNotes = () => {
   const { openModal } = useUiStore();
 
   //note store
-  const { startLoadingNotes } = useNotesStore();
+  const { startLoadingNotes, tags, filter, setEmptyFilter } = useNotesStore();
 
   //set click to open modal
   const onClickOpenModal = (e) => {
@@ -27,6 +28,12 @@ export const MyNotes = () => {
   useEffect(() => {
     startLoadingNotes()
   }, []);
+
+  //Logout
+  const onClickLogout = () => {
+    startLogout();
+    setEmptyFilter()
+  }
 
   return <>
     <div className="d-flex gap-5 justify-content-between">
@@ -40,12 +47,16 @@ export const MyNotes = () => {
         <Link to="/archived">
           Archived notes
         </Link> 
+        <div className="list-container">
+          <p className="d-inline-block m-2">Category Filter</p>
+          <DropdownList tags={tags} />
+        </div>
       </div>
-        <button onClick={startLogout} className="btn btn-outline-danger btn-sm m-5">
+        <button onClick={onClickLogout} className="btn btn-outline-danger btn-sm m-5">
           LogOut
         </button>
     </div>
-    <NotesContainer active={true}/>
+    <NotesContainer active={true} filter={filter}/>
     <FormModal />
   </>
 }
