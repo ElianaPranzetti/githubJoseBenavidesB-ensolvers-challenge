@@ -2,15 +2,14 @@
 On this app you can save note with categories (tags), filter them, create a user, login.
 This application is mainly developed with Node.js and React.js, so the application is composed of two parts: Backend (Rest API) and Frontend (SPA).
 
+
 ## Test the app
 Please visit the next link to Test the app, you can *create a user* and crear your own notes, or you can use: [user: test1@gmail.com | password: 123456] :
 https://notes-ensolvers.netlify.app
 
+## Build the project
+To build and start Backend and Frontend execute the file ```project_setup.sh```
 
-## Build the backend
-- run ``` npm i``` to install all dependences
-- set the enviroments variables, look the .env.template file
-- run ``` npm run dev``` to start the server
 
 #### Rest Api Documentation
 Please visit the next Link to see the REST API Documentation:
@@ -25,9 +24,6 @@ https://documenter.getpostman.com/view/20618039/VUxKTpdc
 - jsonwebtoken: "^8.5.1",
 - mongoose: "^6.5.3"
 
-## Build the Frontend
-- run ``` npm i``` to install all dependences
-- run ``` npm run dev``` to start the app
 
 #### Frontend, Used Technologies
 - @reduxjs/toolkit: "^1.8.5",
@@ -41,5 +37,4 @@ https://documenter.getpostman.com/view/20618039/VUxKTpdc
 - react-router: "^6.3.0",
 - react-router-dom: "^6.3.0",
 - reactstrap: "^9.1.4",
-- sass: "^1.54.5",
 - sweetalert2: "^11.4.29"
