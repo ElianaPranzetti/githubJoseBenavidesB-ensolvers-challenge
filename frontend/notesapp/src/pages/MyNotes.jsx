@@ -52,7 +52,7 @@ export const MyNotes = () => {
           <DropdownList tags={tags} />
         </div>
       </div>
-        <button onClick={onClickLogout} className="btn btn-outline-danger btn-sm m-5">
+        <button onClick={onClickLogout} className="btn btn-outline-danger btn-sm m-5 btn-logout">
           LogOut
         </button>
     </div>

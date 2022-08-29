@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const calendarApi = axios.create({
-    baseURL: "http://localhost:8085/api/v1"
+    baseURL: "https://notes-ensolvers.herokuapp.com/api/v1"
 });
 
 // config interceptors, to add TOKEN all REQUEST

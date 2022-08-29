@@ -40,7 +40,7 @@ export const ArchivedNotes = () => {
             <DropdownList tags={tags} className=""/>
           </div>
         </div>
-        <button onClick={onClickLogout} className="btn btn-outline-danger btn-sm m-5">
+        <button onClick={onClickLogout} className="btn btn-outline-danger btn-sm m-5 btn-logout">
           LogOut
         </button>
       </div> <hr/>
