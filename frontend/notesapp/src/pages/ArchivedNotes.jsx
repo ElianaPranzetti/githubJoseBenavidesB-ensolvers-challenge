@@ -33,7 +33,7 @@ export const ArchivedNotes = () => {
           <Link
             to="/"
           >
-            <i className="fa-solid fa-angle-left"></i>Go back to unarchived notes
+            <i className="fa-solid fa-angle-left"></i>Go back to <strong>My Notes</strong>
           </Link>
           <div className="list-container mt-2">
             <p className="d-inline-block m-2">Category Filter</p>

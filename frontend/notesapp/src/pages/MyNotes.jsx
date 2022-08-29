@@ -44,7 +44,7 @@ export const MyNotes = () => {
           className="btn btn-outline-primary btn-create m-1">
             Create Note
         </button>
-        <Link to="/archived">
+        <Link to="/archived" className="mx-md-5">
           Archived notes
         </Link> 
         <div className="list-container">

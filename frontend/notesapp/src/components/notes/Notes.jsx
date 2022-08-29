@@ -9,7 +9,7 @@ import './notes.css'
 
 export const Notes = ({note}) => {
 
-    const { _id, title, lastEdited, active } = note;
+    const { _id, title, lastEdited, active, content } = note;
 
     //use the store
     const { setActiveNote, startDeleteNote, setArchived, setUnArchived, setActiveTags} = useNotesStore();
@@ -20,7 +20,7 @@ export const Notes = ({note}) => {
     //Active note
     const onClickEdit = () => {
       setActiveNote(note)
-      setActiveTags(note)
+      setActiveTags(note.tags)
       openModal();
 
     };
@@ -54,15 +54,20 @@ export const Notes = ({note}) => {
 
   return (
     <div key={_id} className="col-md-5 col-lg-4 col-xl-3 border m-1 p-1">
-        <h3>{ title }</h3>
-        <div className="d-flex">
-            <h4 className='col-9'>Last edited: { lastEdited }</h4>
-            {
-              (active) ? (<h5 className='col-1 button' onClick={() => onClickArchived(_id, title)}><i className="fa-solid fa-box-archive"></i></h5>)
-                :<h5 className='col-1 button' onClick={() => onClickRestore(_id, title)}><i className="fa-solid fa-upload"></i></h5>
-            }
-            <h5 className='col-1 button' onClick={onClickEdit}><i className="fa-solid fa-pen"></i></h5>
-            <h5 className='col-1 button' onClick={() => onClickDelete(_id)}><i className="fa-solid fa-trash-can"></i></h5>
+        <h4>{ title }</h4> <hr/>
+        <div className="d-flex justify-content-between">
+            <div className="content-p">
+              <p className='col-9 d-block'><strong>Content</strong>: { content }</p>
+              <p className='col-9 d-block'><strong>Last edited</strong>: { lastEdited }</p>
+            </div>
+            <div className="button-edit">
+              {
+                (active) ? (<h5 className='col-1 button' onClick={() => onClickArchived(_id, title)}><i className="fa-solid fa-box-archive"></i></h5>)
+                  :<h5 className='col-1 button' onClick={() => onClickRestore(_id, title)}><i className="fa-solid fa-upload"></i></h5>
+              }
+              <h5 className='col-1 button' onClick={onClickEdit}><i className="fa-solid fa-pen"></i></h5>
+              <h5 className='col-1 button' onClick={() => onClickDelete(_id)}><i className="fa-solid fa-trash-can"></i></h5>
+            </div>
         </div>
     </div>
   )

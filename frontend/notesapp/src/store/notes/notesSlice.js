@@ -76,7 +76,7 @@ export const notesSlice = createSlice({
       state.tags = payload
     },
     onSetActiveTags: ( state, { payload }) => {
-      state.activeTags = payload
+      state.activeTags = state.activeTags.concat(payload)
     },
     onDisableActiveTags: (state) => {
       state.activeTags = []
@@ -86,6 +86,9 @@ export const notesSlice = createSlice({
     },
     onDisableFilter: ( state ) => {
       state.filter = ''
+    },
+    onDeleteTag: ( state, { payload }) => {
+      state.activeTags = state.activeTags.filter( tag => { return tag !== payload})
     }
   },
 })
@@ -105,5 +108,6 @@ export const {
               onSetActiveTags,
               onDisableActiveTags,
               onSetFilter,
-              onDisableFilter
+              onDisableFilter,
+              onDeleteTag
             } = notesSlice.actions

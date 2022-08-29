@@ -9,6 +9,8 @@ import { archiveNote,
         disableNote, 
         onAddNewNote, 
         onDeleteNote,  
+        onDeleteTag,  
+        onDisableActiveTags,  
         onDisableFilter, 
         onLoadNotes, 
         onSetActiveNote, 
@@ -120,8 +122,13 @@ export const useNotesStore = () => {
     };
 
     //set Active Tags
-    const setActiveTags = ( note ) => {
-        dispatch( onSetActiveTags( note.tags ))
+    const setActiveTags = ( tag ) => {
+        dispatch( onSetActiveTags( tag ))
+    };
+
+    //disable active tags
+    const setEmptyActiveTags = () => {
+        dispatch( onDisableActiveTags() )
     };
 
     //set filter tag
@@ -133,6 +140,11 @@ export const useNotesStore = () => {
     const setEmptyFilter = () => {
         dispatch( onDisableFilter() )
     };
+
+    //delete tag from store
+    const setDeleteTag = (tag) => {
+        dispatch( onDeleteTag(tag) )
+    }
 
 
 
@@ -155,6 +167,8 @@ export const useNotesStore = () => {
         setNoteTags,
         setActiveTags,
         setFilterTag,
-        setEmptyFilter
+        setEmptyFilter,
+        setEmptyActiveTags,
+        setDeleteTag
     }
 }
