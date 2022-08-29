@@ -2,6 +2,11 @@
 On this app you can save note with categories (tags), filter them, create a user, login.
 This application is mainly developed with Node.js and React.js, so the application is composed of two parts: Backend (Rest API) and Frontend (SPA).
 
+## Test the app
+Please visit the next link to Test the app, you can *create a user* and crear your own notes, or you can use: [user: test1@gmail.com | password: 123456] :
+https://notes-ensolvers.netlify.app
+
+
 ## Build the backend
 - run ``` npm i``` to install all dependences
 - set the enviroments variables, look the .env.template file
